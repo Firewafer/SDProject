@@ -36,7 +36,7 @@ public class Register extends JFrame {
             String user = userField.getText();
             String pass = new String(passField.getPassword());
 
-            if (DBHelper.registerUser(user, pass)) {
+            if (DBHelper.registerUser(user, pass, 0)) {
                 JOptionPane.showMessageDialog(this, "Registered successfully!");
             } else {
                 JOptionPane.showMessageDialog(this, "Registration failed! User may exist.");

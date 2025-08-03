@@ -6,11 +6,11 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
-public class LoginTest extends JFrame {
+public class RegiTest extends JFrame {
 
-    public LoginTest() {
+    public RegiTest() {
         // Set frame properties
-        setTitle("Login");
+        setTitle("Sign Up");
         setSize(400, 600);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
@@ -18,9 +18,9 @@ public class LoginTest extends JFrame {
         getContentPane().setBackground(new Color(235, 255, 240)); // Light blue-gray
 
         // App title
-        JLabel title = new JLabel("Welcome Back!");
+        JLabel title = new JLabel("Sign Up");
         title.setFont(new Font("Segoe UI", Font.BOLD, 24));
-        title.setBounds(110, 50, 300, 40);
+        title.setBounds(100, 50, 300, 40);
         title.setForeground(new Color(33, 37, 41));
         add(title);
 
@@ -68,7 +68,7 @@ public class LoginTest extends JFrame {
         add(passwordField);
 
         // Rounded login button
-        JButton loginBtn = new RoundedButton("Login");
+        JButton loginBtn = new RoundedButton("Sign Up");
         loginBtn.setBounds(135, 280, 120, 40);
         loginBtn.setFont(new Font("Segoe UI", Font.BOLD, 16));
         loginBtn.setBackground(new Color(4, 191, 51));
@@ -76,33 +76,37 @@ public class LoginTest extends JFrame {
         loginBtn.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         add(loginBtn);
 
+
+
+        /*// Button logic
+        loginBtn.addActionListener(e -> {
+            String user = usernameField.getText();
+            String pass = String.valueOf(passwordField.getPassword());
+
+            if (user.equals("admin") && pass.equals("1234")) {
+                JOptionPane.showMessageDialog(this, "Login Successful!");
+            } else {
+                JOptionPane.showMessageDialog(this, "Invalid Credentials!", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        });*/
+
+
         loginBtn.addActionListener(e -> {
             String user = usernameField.getText();
             String pass = new String(passwordField.getPassword());
-            // DataBase Work
-            if (DBHelper.loginUser(user, pass)) {
-                JOptionPane.showMessageDialog(this, "Login successful!");
-
-                PreferenceManager.savePreferences(user, true);
-
-                dispose();
-                new AfterLogin();
-
-            } else {
-                JOptionPane.showMessageDialog(this, "Invalid username or password.");
-            }
+            regiWork(user, pass);
         });
 
 
         // Did't have an Account
-        JLabel useractext = new JLabel("Didn't Have an Account?");
+        JLabel useractext = new JLabel("Already Have an Account?");
         useractext.setFont(new Font("Segoe UI", Font.ITALIC, 15));
         useractext.setBounds(120, 450, 300, 40);
         useractext.setForeground(new Color(33, 37, 41));
         add(useractext);
 
         // Rounded Regi button
-        JButton regiBtn = new RoundedButton("Sign Up");
+        JButton regiBtn = new RoundedButton("Login");
         regiBtn.setBounds(135, 490, 120, 40);
         regiBtn.setFont(new Font("Segoe UI", Font.BOLD, 16));
         regiBtn.setBackground(new Color(4, 191, 51));
@@ -111,7 +115,8 @@ public class LoginTest extends JFrame {
         add(regiBtn);
 
         regiBtn.addActionListener(e -> {
-            gotoToRegister();
+            dispose();
+            new LoginTest();
         });
 
         setVisible(true);
@@ -140,12 +145,18 @@ public class LoginTest extends JFrame {
     }
 
     public static void main(String[] args) {
-        SwingUtilities.invokeLater(LoginTest::new);
+        SwingUtilities.invokeLater(RegiTest::new);
     }
 
-    public void gotoToRegister(){
-        dispose();
-        new RegiTest();
+    public void regiWork(String user, String pass){
+
+        if (DBHelper.registerUser(user, pass, 0)) {
+            JOptionPane.showMessageDialog(this, "Registered successfully!");
+            dispose();
+            new LoginTest();
+        } else {
+            JOptionPane.showMessageDialog(this, "User Name Taken. Try another.");
+        }
     }
 }
 
