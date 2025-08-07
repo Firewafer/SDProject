@@ -19,7 +19,7 @@ public class RankPage extends JFrame {
         setTitle("Leaderboard");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(400, 600);
-        setLocationRelativeTo(null); // Center the window
+        setLocationRelativeTo(null);
 
         String[] columnNames = {"Rank", "User Name", "High Score"};
 
@@ -44,7 +44,7 @@ public class RankPage extends JFrame {
         table.setShowHorizontalLines(true);
         table.setShowVerticalLines(false);
 
-        // Table header customization
+
         JTableHeader header = table.getTableHeader();
         header.setFont(new Font("Segoe UI", Font.BOLD, 14));
         header.setBackground(new Color(4, 191, 51));
@@ -52,9 +52,9 @@ public class RankPage extends JFrame {
         header.setReorderingAllowed(false);
         header.setPreferredSize(new Dimension(header.getWidth(), 35));
 
-        // Alternate row colors
+
         table.setDefaultRenderer(Object.class, new DefaultTableCellRenderer() {
-            private final Color evenColor = new Color(242, 255, 240);  // Light blueish
+            private final Color evenColor = new Color(242, 255, 240);
             @Override
             public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected,
                                                            boolean hasFocus, int row, int column) {
@@ -96,7 +96,7 @@ public class RankPage extends JFrame {
         setVisible(true);
     }
 
-    // Rounded button class
+
     class RoundedButton extends JButton {
         public RoundedButton(String label) {
             super(label);

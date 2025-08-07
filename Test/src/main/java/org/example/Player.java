@@ -5,13 +5,12 @@ public class Player {
     private String username;
     private int score;
 
-    // We don't store rank in the constructor as it's calculated dynamically
+
     public Player(String username, int score) {
         this.username = username;
         this.score = score;
     }
 
-    // Getters and Setters
     public int getRank() {
         return rank;
     }

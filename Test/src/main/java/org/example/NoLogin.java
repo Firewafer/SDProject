@@ -9,7 +9,7 @@ import java.awt.event.*;
 public class NoLogin extends JFrame {
 
     public NoLogin() {
-        // Set frame properties
+
         setTitle("Flapy Bird");
         setSize(400, 600);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -17,16 +17,16 @@ public class NoLogin extends JFrame {
         setLayout(null);
         getContentPane().setBackground(new Color(235, 255, 240)); // Light blue-gray
 
-        // App title
+
         JLabel title = new JLabel("Welcome!");
         title.setFont(new Font("Segoe UI", Font.BOLD, 24));
         title.setBounds(150, 50, 300, 40);
         title.setForeground(new Color(33, 37, 41));
         add(title);
 
-        // Rounded login button
+
         JButton playBtn = new RoundedButton("PLAY AS GUEST");
-        playBtn.setBounds(105, 150, 200, 40);
+        playBtn.setBounds(105, 150, 200, 60);
         playBtn.setFont(new Font("Outfit Black", Font.BOLD, 16));
         playBtn.setBackground(new Color(4, 191, 51));
         playBtn.setForeground(Color.WHITE);
@@ -40,7 +40,7 @@ public class NoLogin extends JFrame {
             new GameActivity();
         });
 
-        // Rounded Regi button
+
         JButton loginBtn = new RoundedButton("Login");
         loginBtn.setBounds(135, 435, 120, 40);
         loginBtn.setFont(new Font("Segoe UI", Font.BOLD, 16));
@@ -59,7 +59,7 @@ public class NoLogin extends JFrame {
         });
 
 
-        // Rounded Regi button
+
         JButton regiBtn = new RoundedButton("Sign Up");
         regiBtn.setBounds(135, 490, 120, 40);
         regiBtn.setFont(new Font("Segoe UI", Font.BOLD, 16));
@@ -80,7 +80,7 @@ public class NoLogin extends JFrame {
         setVisible(true);
     }
 
-    // Rounded button class
+
     class RoundedButton extends JButton {
         public RoundedButton(String label) {
             super(label);

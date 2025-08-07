@@ -13,7 +13,7 @@ import java.util.Properties;
 public class AfterLogin extends JFrame {
 
     public AfterLogin() {
-        // Set frame properties
+
         setTitle("Flapy Bird");
         setSize(400, 600);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -23,28 +23,44 @@ public class AfterLogin extends JFrame {
 
 
 
-        // Rounded login button
         JButton playBtn = new RoundedButton("PLAY NOW");
-        playBtn.setBounds(105, 200, 200, 40);
+        playBtn.setBounds(105, 200, 200, 60);
         playBtn.setFont(new Font("Outfit Black", Font.BOLD, 16));
         playBtn.setBackground(new Color(4, 191, 51));
         playBtn.setForeground(Color.WHITE);
         playBtn.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         add(playBtn);
 
-
-
         playBtn.addActionListener(e -> {
             dispose();
             new GameActivity();
         });
 
-        // Rounded Regi button
+
+        JButton changePassBtn = new RoundedButton("Change Password");
+        changePassBtn.setBounds(120, 435, 150, 40);
+        changePassBtn.setFont(new Font("Segoe UI", Font.BOLD, 16));
+        changePassBtn.setForeground(new Color(4, 191, 51));
+        changePassBtn.setBackground(new Color(0, 0, 0, 0));
+        changePassBtn.setContentAreaFilled(false); // No fill
+        changePassBtn.setBorderPainted(true);
+        changePassBtn.setFocusPainted(false);
+        changePassBtn.setBorder(BorderFactory.createLineBorder(new Color(4, 191, 51), 2));
+        changePassBtn.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        add(changePassBtn);
+
+        changePassBtn.addActionListener(e -> {
+            dispose();
+            new ChangePass();
+        });
+
+
+
         JButton rankBtn = new RoundedButton("Leaderboard");
-        rankBtn.setBounds(135, 435, 120, 40);
+        rankBtn.setBounds(120, 390, 150, 40);
         rankBtn.setFont(new Font("Segoe UI", Font.BOLD, 16));
-        rankBtn.setForeground(new Color(4, 191, 51)); // Match stroke color
-        rankBtn.setBackground(new Color(0, 0, 0, 0)); // Transparent background
+        rankBtn.setForeground(new Color(4, 191, 51));
+        rankBtn.setBackground(new Color(0, 0, 0, 0));
         rankBtn.setContentAreaFilled(false); // No fill
         rankBtn.setBorderPainted(true);
         rankBtn.setFocusPainted(false);
@@ -58,9 +74,8 @@ public class AfterLogin extends JFrame {
         });
 
 
-        // Rounded Regi button
         JButton regiBtn = new RoundedButton("Logout");
-        regiBtn.setBounds(135, 490, 120, 40);
+        regiBtn.setBounds(120, 490, 150, 40);
         regiBtn.setFont(new Font("Segoe UI", Font.BOLD, 16));
         regiBtn.setForeground(new Color(176, 2, 2)); // Match stroke color
         regiBtn.setBackground(new Color(0, 0, 0, 0)); // Transparent background
@@ -79,17 +94,17 @@ public class AfterLogin extends JFrame {
 
         String username = getUserNamefromFile();
 
-        // App title
+
         JLabel title = new JLabel("<html>Welcome,<br>" + username + "</html>");
         title.setFont(new Font("Segoe UI", Font.BOLD, 24));
-        title.setBounds(150, 50, 500, 60);
+        title.setBounds(100, 50, 500, 60);
         title.setForeground(new Color(33, 37, 41));
         add(title);
 
         setVisible(true);
     }
 
-    // Rounded button class
+
     class RoundedButton extends JButton {
         public RoundedButton(String label) {
             super(label);
@@ -112,7 +127,7 @@ public class AfterLogin extends JFrame {
     }
 
     public static String getUserNamefromFile(){
-        // Load from properties file
+
         String user = "";
         try {
             InputStream input = new FileInputStream("config.properties");
@@ -120,7 +135,6 @@ public class AfterLogin extends JFrame {
             Properties prop = new Properties();
             prop.load(input);
 
-            // Get the raw username
             String rawUsername = prop.getProperty("username").trim();
             user = rawUsername;
         } catch (Exception e) {

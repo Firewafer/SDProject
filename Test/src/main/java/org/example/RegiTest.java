@@ -9,7 +9,7 @@ import java.awt.event.*;
 public class RegiTest extends JFrame {
 
     public RegiTest() {
-        // Set frame properties
+
         setTitle("Sign Up");
         setSize(400, 600);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -17,7 +17,7 @@ public class RegiTest extends JFrame {
         setLayout(null);
         getContentPane().setBackground(new Color(235, 255, 240)); // Light blue-gray
 
-        // App title
+
         JLabel title = new JLabel("Sign Up");
         title.setFont(new Font("Segoe UI", Font.BOLD, 24));
         title.setBounds(100, 50, 300, 40);
@@ -29,14 +29,14 @@ public class RegiTest extends JFrame {
         userIcon.setBounds(60, 140, 30, 30);
         add(userIcon);*/
 
-        // Enter User Name
+
         JLabel usertitle = new JLabel("Enter Username");
         usertitle.setFont(new Font("Segoe UI", Font.PLAIN, 15));
         usertitle.setBounds(100, 105, 300, 40);
         usertitle.setForeground(new Color(33, 37, 41));
         add(usertitle);
 
-        // Username field
+
         JTextField usernameField = new JTextField();
         usernameField.setBounds(100, 140, 220, 30);
         usernameField.setFont(new Font("Segoe UI", Font.PLAIN, 14));
@@ -46,18 +46,14 @@ public class RegiTest extends JFrame {
         ));
         add(usernameField);
 
-        // Password icon
-        JLabel passIcon = new JLabel(new ImageIcon("password_icon.png")); // replace with your actual icon
-        passIcon.setBounds(60, 200, 30, 30);
-        add(passIcon);
 
-        // Enter User Name
+
         JLabel userpass = new JLabel("Enter Password");
         userpass.setFont(new Font("Segoe UI", Font.PLAIN, 15));
         userpass.setBounds(100, 180, 300, 40);
         userpass.setForeground(new Color(33, 37, 41));
         add(userpass);
-        // Password field
+
         JPasswordField passwordField = new JPasswordField();
         passwordField.setBounds(100, 215, 220, 30);
         passwordField.setFont(new Font("Segoe UI", Font.PLAIN, 14));
@@ -67,7 +63,7 @@ public class RegiTest extends JFrame {
         ));
         add(passwordField);
 
-        // Rounded login button
+
         JButton loginBtn = new RoundedButton("Sign Up");
         loginBtn.setBounds(135, 280, 120, 40);
         loginBtn.setFont(new Font("Segoe UI", Font.BOLD, 16));
@@ -76,41 +72,34 @@ public class RegiTest extends JFrame {
         loginBtn.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         add(loginBtn);
 
-
-
-        /*// Button logic
-        loginBtn.addActionListener(e -> {
-            String user = usernameField.getText();
-            String pass = String.valueOf(passwordField.getPassword());
-
-            if (user.equals("admin") && pass.equals("1234")) {
-                JOptionPane.showMessageDialog(this, "Login Successful!");
-            } else {
-                JOptionPane.showMessageDialog(this, "Invalid Credentials!", "Error", JOptionPane.ERROR_MESSAGE);
-            }
-        });*/
-
-
         loginBtn.addActionListener(e -> {
             String user = usernameField.getText();
             String pass = new String(passwordField.getPassword());
+            if (pass.length() < 4) {
+                JOptionPane.showMessageDialog(null, "Password must be at least 4 characters long.", "Invalid Password", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
             regiWork(user, pass);
         });
 
 
-        // Did't have an Account
+
         JLabel useractext = new JLabel("Already Have an Account?");
         useractext.setFont(new Font("Segoe UI", Font.ITALIC, 15));
-        useractext.setBounds(120, 450, 300, 40);
+        useractext.setBounds(120, 385, 300, 40);
         useractext.setForeground(new Color(33, 37, 41));
         add(useractext);
 
-        // Rounded Regi button
+
         JButton regiBtn = new RoundedButton("Login");
-        regiBtn.setBounds(135, 490, 120, 40);
+        regiBtn.setBounds(135, 425, 120, 40);
         regiBtn.setFont(new Font("Segoe UI", Font.BOLD, 16));
-        regiBtn.setBackground(new Color(4, 191, 51));
-        regiBtn.setForeground(Color.WHITE);
+        regiBtn.setForeground(new Color(4, 191, 51)); // Match stroke color
+        regiBtn.setBackground(new Color(0, 0, 0, 0)); // Transparent background
+        regiBtn.setContentAreaFilled(false); // No fill
+        regiBtn.setBorderPainted(true);
+        regiBtn.setFocusPainted(false);
+        regiBtn.setBorder(BorderFactory.createLineBorder(new Color(4, 191, 51), 2));
         regiBtn.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         add(regiBtn);
 
@@ -119,10 +108,29 @@ public class RegiTest extends JFrame {
             new LoginTest();
         });
 
+
+        JButton homeBtn = new RoundedButton("Home");
+        homeBtn.setBounds(135, 510, 120, 40);
+        homeBtn.setFont(new Font("Segoe UI", Font.BOLD, 16));
+        homeBtn.setForeground(new Color(4, 191, 51)); // Match stroke color
+        homeBtn.setBackground(new Color(0, 0, 0, 0)); // Transparent background
+        homeBtn.setContentAreaFilled(false); // No fill
+        homeBtn.setBorderPainted(true);
+        homeBtn.setFocusPainted(false);
+        homeBtn.setBorder(BorderFactory.createLineBorder(new Color(4, 191, 51), 2));
+        homeBtn.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        add(homeBtn);
+
+        homeBtn.addActionListener(e -> {
+            dispose();
+            new NoLogin();
+        });
+
+
         setVisible(true);
     }
 
-    // Rounded button class
+
     class RoundedButton extends JButton {
         public RoundedButton(String label) {
             super(label);

@@ -17,24 +17,21 @@ public class Main {
         String username = "";
         boolean isLoggedIn = false;
 
-        // Load from properties file
         try {
             InputStream input = new FileInputStream("config.properties");
 
             Properties prop = new Properties();
             prop.load(input);
 
-            // Get the raw username
             String rawUsername = prop.getProperty("username");
 
             if (rawUsername == null || rawUsername.trim().isEmpty()) {
-                System.out.println("⚠️ Username not found in config.properties");
+                System.out.println("Username not found in config.properties");
             } else {
-                username = rawUsername.trim(); // safe to assign
+                username = rawUsername.trim();
                 System.out.println("Username: " + username);
             }
 
-            // Load other properties with default fallbacks
 
             isLoggedIn = Boolean.parseBoolean(prop.getProperty("isLoggedIn", "false"));
             System.out.println("Is Logged In: " + isLoggedIn);

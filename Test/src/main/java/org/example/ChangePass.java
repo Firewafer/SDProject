@@ -5,12 +5,15 @@ import org.example.models.DBHelper;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.io.FileInputStream;
+import java.io.InputStream;
+import java.util.Properties;
 
-public class LoginTest extends JFrame {
+public class ChangePass extends JFrame {
 
-    public LoginTest() {
+    public ChangePass() {
 
-        setTitle("Login");
+        setTitle("Change Password");
         setSize(400, 600);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
@@ -18,41 +21,36 @@ public class LoginTest extends JFrame {
         getContentPane().setBackground(new Color(235, 255, 240)); // Light blue-gray
 
 
-        JLabel title = new JLabel("Login");
+        JLabel title = new JLabel("Change Password");
         title.setFont(new Font("Segoe UI", Font.BOLD, 24));
         title.setBounds(100, 50, 300, 40);
         title.setForeground(new Color(33, 37, 41));
         add(title);
 
-       /* // Username icon
+       /*
         JLabel userIcon = new JLabel(new ImageIcon("C:\\Users\\user\\Downloads\\profile.png")); // replace with your actual icon
         userIcon.setBounds(60, 140, 30, 30);
         add(userIcon);*/
 
-
-        JLabel usertitle = new JLabel("Enter Username");
+        JLabel usertitle = new JLabel("Enter Current Password");
         usertitle.setFont(new Font("Segoe UI", Font.PLAIN, 15));
         usertitle.setBounds(100, 105, 300, 40);
         usertitle.setForeground(new Color(33, 37, 41));
         add(usertitle);
 
 
-        JTextField usernameField = new JTextField();
-        usernameField.setBounds(100, 140, 220, 30);
-        usernameField.setFont(new Font("Segoe UI", Font.PLAIN, 14));
-        usernameField.setBorder(BorderFactory.createCompoundBorder(
+        JPasswordField oldPasswordField = new JPasswordField();
+        oldPasswordField.setBounds(100, 140, 220, 30);
+        oldPasswordField.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+        oldPasswordField.setBorder(BorderFactory.createCompoundBorder(
                 BorderFactory.createLineBorder(Color.GRAY),
                 BorderFactory.createEmptyBorder(5, 5, 5, 5)
         ));
-        add(usernameField);
-
-        /*// Password icon
-        JLabel passIcon = new JLabel(new ImageIcon("password_icon.png")); // replace with your actual icon
-        passIcon.setBounds(60, 200, 30, 30);
-        add(passIcon);*/
+        add(oldPasswordField);
 
 
-        JLabel userpass = new JLabel("Enter Password");
+
+        JLabel userpass = new JLabel("Enter New Password");
         userpass.setFont(new Font("Segoe UI", Font.PLAIN, 15));
         userpass.setBounds(100, 180, 300, 40);
         userpass.setForeground(new Color(33, 37, 41));
@@ -68,8 +66,8 @@ public class LoginTest extends JFrame {
         add(passwordField);
 
 
-        JButton loginBtn = new RoundedButton("Login");
-        loginBtn.setBounds(135, 280, 120, 40);
+        JButton loginBtn = new RoundedButton("Change Password");
+        loginBtn.setBounds(105, 280, 200, 40);
         loginBtn.setFont(new Font("Segoe UI", Font.BOLD, 16));
         loginBtn.setBackground(new Color(4, 191, 51));
         loginBtn.setForeground(Color.WHITE);
@@ -77,34 +75,38 @@ public class LoginTest extends JFrame {
         add(loginBtn);
 
         loginBtn.addActionListener(e -> {
-            String user = usernameField.getText();
-            String pass = new String(passwordField.getPassword());
-            // DataBase Work
-            if (DBHelper.loginUser(user, pass)) {
-                JOptionPane.showMessageDialog(this, "Login successful!");
+            String user = getUserNamefromFile();
+            String oldpass = new String(oldPasswordField.getPassword());
+            String newpass = new String(passwordField.getPassword());
 
-                PreferenceManager.savePreferences(user, true);
+            if (newpass.length() < 4) {
+                JOptionPane.showMessageDialog(null, "New Password must be at least 4 characters long.", "Invalid Password", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
 
-                dispose();
-                new AfterLogin();
+            if (DBHelper.loginUser(user, oldpass)) {
+                DBHelper db = new DBHelper();
+                boolean success = db.updatePassword(user, newpass);
+                if (success) {
+                    JOptionPane.showMessageDialog(this, "Password updated successfully.");
+                    dispose();
+                    new AfterLogin();
+                } else {
+                    JOptionPane.showMessageDialog(this, "Failed to update password.");
+                }
+
+
 
             } else {
-                JOptionPane.showMessageDialog(this, "Invalid username or password.");
+                JOptionPane.showMessageDialog(this, "Wrong Current Password.");
             }
         });
 
 
 
-        JLabel useractext = new JLabel("Didn't Have an Account?");
-        useractext.setFont(new Font("Segoe UI", Font.ITALIC, 15));
-        useractext.setBounds(120, 385, 300, 40);
-        useractext.setForeground(new Color(33, 37, 41));
-        add(useractext);
 
-
-
-        JButton regiBtn = new RoundedButton("Sign Up");
-        regiBtn.setBounds(135, 425, 120, 40);
+        JButton regiBtn = new RoundedButton("Home");
+        regiBtn.setBounds(135, 490, 120, 40);
         regiBtn.setFont(new Font("Segoe UI", Font.BOLD, 16));
         regiBtn.setForeground(new Color(4, 191, 51)); // Match stroke color
         regiBtn.setBackground(new Color(0, 0, 0, 0)); // Transparent background
@@ -116,30 +118,15 @@ public class LoginTest extends JFrame {
         add(regiBtn);
 
         regiBtn.addActionListener(e -> {
-            gotoToRegister();
-        });
-
-        JButton homeBtn = new RoundedButton("Home");
-        homeBtn.setBounds(135, 510, 120, 40);
-        homeBtn.setFont(new Font("Segoe UI", Font.BOLD, 16));
-        homeBtn.setForeground(new Color(4, 191, 51)); // Match stroke color
-        homeBtn.setBackground(new Color(0, 0, 0, 0)); // Transparent background
-        homeBtn.setContentAreaFilled(false); // No fill
-        homeBtn.setBorderPainted(true);
-        homeBtn.setFocusPainted(false);
-        homeBtn.setBorder(BorderFactory.createLineBorder(new Color(4, 191, 51), 2));
-        homeBtn.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-        add(homeBtn);
-
-        homeBtn.addActionListener(e -> {
             dispose();
-            new NoLogin();
+            new AfterLogin();
         });
+
 
         setVisible(true);
     }
 
-    // Rounded button class
+
     class RoundedButton extends JButton {
         public RoundedButton(String label) {
             super(label);
@@ -161,8 +148,35 @@ public class LoginTest extends JFrame {
 
     }
 
+    public static String getUserNamefromFile(){
+
+        String user = "";
+        try {
+            InputStream input = new FileInputStream("config.properties");
+
+            Properties prop = new Properties();
+            prop.load(input);
+
+
+            String rawUsername = prop.getProperty("username");
+            if (rawUsername == null || rawUsername.trim().isEmpty()) {
+                System.out.println("⚠️ Username not found in config.properties");
+                return null;
+
+            } else {
+                user = rawUsername.trim();
+                //System.out.println("Username: " + username);
+            }
+        } catch (Exception e) {
+            System.out.println("Error loading properties: " + e.getMessage());
+        }
+
+
+        return user;
+    }
+
     public static void main(String[] args) {
-        SwingUtilities.invokeLater(LoginTest::new);
+        SwingUtilities.invokeLater(ChangePass::new);
     }
 
     public void gotoToRegister(){

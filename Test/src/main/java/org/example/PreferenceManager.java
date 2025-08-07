@@ -39,9 +39,9 @@ public class PreferenceManager {
 
         try (OutputStream output = new FileOutputStream(FILE_NAME)) {
             prop.store(output, "All preferences cleared");
-            System.out.println("✅ All preferences cleared.");
+            System.out.println("All preferences cleared.");
         } catch (IOException io) {
-            System.out.println("⚠️ Failed to clear preferences: " + io.getMessage());
+            System.out.println("Failed to clear preferences: " + io.getMessage());
         }
     }
 }

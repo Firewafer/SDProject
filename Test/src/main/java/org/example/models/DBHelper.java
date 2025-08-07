@@ -14,8 +14,6 @@ public class DBHelper {
 
     public DBHelper() {
 
-         // Specify your database URL
-
         try {
 
             connection = DriverManager.getConnection(url);
@@ -59,7 +57,7 @@ public class DBHelper {
             pstmt.executeUpdate();
             return true;
         } catch (SQLException e) {
-            return false; // likely user already exists
+            return false;
         }
     }
 
@@ -79,7 +77,7 @@ public class DBHelper {
 
     public List<Player> getScoresSorted() {
         List<Player> p = new ArrayList<>();
-        // The "ORDER BY score DESC" clause sorts the results
+
         String querySQL = "SELECT username, highscore FROM players ORDER BY highscore DESC";
 
         try (Connection conn = getConnection();
@@ -97,7 +95,7 @@ public class DBHelper {
         return p;
     }
 
-    // Get the highscore for a specific user
+
     public int getHighScore(String username) {
         String sql = "SELECT highscore FROM players WHERE username = ?";
         try (Connection conn = DriverManager.getConnection(url);
@@ -110,10 +108,10 @@ public class DBHelper {
         } catch (SQLException e) {
             System.err.println("Error fetching highscore: " + e.getMessage());
         }
-        return -1; // Return -1 if user not found or error occurs
+        return -1;
     }
 
-    // Update the highscore for a specific user
+
     public boolean updateHighScore(String username, int newHighScore) {
         String sql = "UPDATE players SET highscore = ? WHERE username = ?";
         try (Connection conn = DriverManager.getConnection(url);
@@ -124,6 +122,20 @@ public class DBHelper {
             return affectedRows > 0;
         } catch (SQLException e) {
             System.err.println("Error updating highscore: " + e.getMessage());
+            return false;
+        }
+    }
+
+    public boolean updatePassword(String username, String newPassword) {
+        String sql = "UPDATE players SET password = ? WHERE username = ?";
+        try (Connection conn = DriverManager.getConnection(url);
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setString(1, newPassword);
+            pstmt.setString(2, username);
+            int affectedRows = pstmt.executeUpdate();
+            return affectedRows > 0;
+        } catch (SQLException e) {
+            System.err.println("Error updating password: " + e.getMessage());
             return false;
         }
     }

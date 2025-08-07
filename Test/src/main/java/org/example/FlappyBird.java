@@ -205,7 +205,7 @@ public class FlappyBird extends JPanel implements ActionListener, KeyListener {
 
 
     public static String getUserNamefromFile(){
-        // Load from properties file
+
         String user = "";
         try {
             InputStream input = new FileInputStream("config.properties");
@@ -213,7 +213,7 @@ public class FlappyBird extends JPanel implements ActionListener, KeyListener {
             Properties prop = new Properties();
             prop.load(input);
 
-            // Get the raw username
+
             String rawUsername = prop.getProperty("username");
             if (rawUsername == null || rawUsername.trim().isEmpty()) {
                 System.out.println("⚠️ Username not found in config.properties");
@@ -276,7 +276,7 @@ public class FlappyBird extends JPanel implements ActionListener, KeyListener {
         }
         else if (e.getKeyCode() == KeyEvent.VK_H && gameOver) {
 
-            //
+
             String userName = getUserNamefromFile();
             if (userName == null) {
                 System.out.println("Error loading properties: NULLLLLL");
